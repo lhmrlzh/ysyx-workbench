@@ -1023,11 +1023,12 @@ int main(int ac, char **av)
 			single_menu_mode = 1;
 	}
 
-	if (init_dialog(NULL)) {
-		fprintf(stderr, "Your display is too small to run Menuconfig!\n");
-		fprintf(stderr, "It must be at least 19 lines by 80 columns.\n");
-		return 1;
-	}
+	// 避免跳出窗口修改的问题：wsl图形化支持比较麻烦
+	// if (init_dialog(NULL)) {
+	// 	fprintf(stderr, "Your display is too small to run Menuconfig!\n");
+	// 	fprintf(stderr, "It must be at least 19 lines by 80 columns.\n");
+	// 	return 1;
+	// }
 
 	set_config_filename(conf_get_configname());
 	conf_set_message_callback(conf_message_callback);
