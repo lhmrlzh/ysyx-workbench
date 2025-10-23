@@ -15,7 +15,7 @@
 
 #include <isa.h>
 #include <cpu/cpu.h>
-#include <memory/paddr.h>
+#include <memory/vaddr.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdint.h>
@@ -85,7 +85,7 @@ static int cmd_x(char *args) {
   uint32_t addr = strtol(args, NULL, 16);
 
   for (int i = 0; i < n; ++i) {
-    printf("0x%x", paddr_read(addr, 4));
+    printf("0x%x", vaddr_read(addr, 4));
     if (i % 4 == 3)
       printf("\n");
     else
