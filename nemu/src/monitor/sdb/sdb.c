@@ -52,19 +52,37 @@ static int cmd_q(char *args) {
   return -1;
 }
 
+static int cmd_si(char *args) {
+  int steps = 1;
+  if (args != NULL)
+    steps = atoi(args);
+  cpu_exec(steps);
+  return 0;
+}
+
+static int cmd_info(char *args) {
+  if (strcmp(args, "r") == 0) {
+    isa_reg_display();
+  } else if (strcmp(args, "w") == 0) {
+  }
+  cpu_exec(atoi(args));
+  return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
   const char *name;
   const char *description;
-  int (*handler) (char *);
-} cmd_table [] = {
-  { "help", "Display information about all supported commands", cmd_help },
-  { "c", "Continue the execution of the program", cmd_c },
-  { "q", "Exit NEMU", cmd_q },
+  int (*handler)(char *);
+} cmd_table[] = {
+    {"help", "Display information about all supported commands", cmd_help},
+    {"c", "Continue the execution of the program", cmd_c},
+    {"q", "Exit NEMU", cmd_q},
 
-  /* TODO: Add more commands */
-
+    /* TODO: Add more commands */
+    {"si", "Step i steps", cmd_si},
+    {"info", "Display information about the process", cmd_info},
 };
 
 #define NR_CMD ARRLEN(cmd_table)
