@@ -15,8 +15,11 @@
 
 #include <isa.h>
 #include <cpu/cpu.h>
+#include <memory/paddr.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdint.h>
+#include "debug.h"
 #include "sdb.h"
 
 static int is_batch_mode = false;
@@ -64,8 +67,32 @@ static int cmd_info(char *args) {
   if (strcmp(args, "r") == 0) {
     isa_reg_display();
   } else if (strcmp(args, "w") == 0) {
+    panic("TODO\n");
   }
-  cpu_exec(atoi(args));
+  return 0;
+}
+
+static int cmd_x(char *args) {
+  args = strtok(args, " ");
+  if (args == NULL) {
+    printf("[ERROR]: no n input\n");
+  }
+  int n = atoi(args);
+  args = strtok(NULL, " ");
+  if (args == NULL) {
+    printf("[ERROR]: no n input\n");
+  }
+  uint32_t addr = strtol(args, NULL, 16);
+
+  for (int i = 0; i < n; ++i) {
+    printf("0x%x", paddr_read(addr, 4));
+    if (i % 4 == 3)
+      printf("\n");
+    else
+      printf("\t");
+    addr += 4;
+  }
+
   return 0;
 }
 
@@ -83,6 +110,7 @@ static struct {
     /* TODO: Add more commands */
     {"si", "Step i steps", cmd_si},
     {"info", "Display information about the process", cmd_info},
+    {"x", "Scan N words from address EXPR", cmd_x},
 };
 
 #define NR_CMD ARRLEN(cmd_table)
