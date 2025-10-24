@@ -4,27 +4,27 @@ MILL = ./mill
 PRJ = playground
 
 test:
-	MILL -i $(PRJ).test
+	$(MILL) -i $(PRJ).test
 
 verilog:
 	$(call git_commit, "generate verilog")
 	mkdir -p $(BUILD_DIR)
-	MILL -i $(PRJ).runMain Elaborate --target-dir $(BUILD_DIR)
+	$(MILL) -i $(PRJ).runMain Elaborate --target-dir $(BUILD_DIR)
 
 help:
-	MILL -i $(PRJ).runMain Elaborate --help
+	$(MILL) -i $(PRJ).runMain Elaborate --help
 
 reformat:
-	MILL -i __.reformat
+	$(MILL) -i __.reformat
 
 checkformat:
-	MILL -i __.checkFormat
+	$(MILL) -i __.checkFormat
 
 bsp:
-	MILL -i MILL.bsp.BSP/install
+	$(MILL) -i $(MILL).bsp.BSP/install
 
 idea:
-	MILL -i MILL.idea.GenIdea/idea
+	$(MILL) -i $(MILL).idea.GenIdea/idea
 
 clean:
 	-rm -rf $(BUILD_DIR)
