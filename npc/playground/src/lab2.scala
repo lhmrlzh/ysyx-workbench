@@ -4,15 +4,15 @@ import chisel3._
 import chisel3.util.PriorityEncoder
 import java.awt.MouseInfo
 
-class Encoder8t3 extends Module {
+class Encoder(val w: Int) extends Module {
   val io = IO(new Bundle {
-    val x = Input(UInt(8.W))
+    val x = Input(UInt((1 << w).W))
     val en = Input(Bool())
-    val y = Output(UInt(3.W))
+    val y = Output(UInt(w.W))
     val in = Output(Bool())
   })
 
-  io.y := Mux(io.en, PriorityEncoder(io.x), 0.U(3.W))
+  io.y := Mux(io.en, PriorityEncoder(io.x), 0.U(w.W))
   io.in := io.en && io.x.orR
 }
 
