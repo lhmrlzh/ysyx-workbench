@@ -3,6 +3,7 @@ package lab2
 import chisel3._
 import chisel3.util.PriorityEncoder
 import java.awt.MouseInfo
+import chisel3.util.PopCount
 
 class Encoder(val w: Int) extends Module {
   val io = IO(new Bundle {
@@ -12,7 +13,16 @@ class Encoder(val w: Int) extends Module {
     val in = Output(Bool())
   })
 
-  io.y := Mux(io.en, PriorityEncoder(io.x), 0.U(w.W))
+  val res = Wire(UInt(w.W))
+  when(io.x === 0.U) {
+    res := 0.U
+  }.elsewhen(PopCount(io.x) > 1.U) {
+    res := 0.U
+  }.otherwise {
+    res := PriorityEncoder(io.x)
+  }
+
+  io.y := Mux(io.en, res, 0.U)
   io.in := io.en && io.x.orR
 }
 

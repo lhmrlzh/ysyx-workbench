@@ -30,7 +30,7 @@ class Lab2Spec extends AnyFreeSpec with Matchers {
         if (bit_count == 0) (0.U, 0.B)
         else if (bit_count == 1) {
           var count: Int = 0
-          var nx: Int = x
+          var nx: Int = x >> 1
           while (nx > 0) {
             nx = nx >> 1
             count = count + 1
@@ -48,12 +48,6 @@ class Lab2Spec extends AnyFreeSpec with Matchers {
         dut.io.y.expect(y)
         dut.io.in.expect(in)
       }
-
-      dut.reset.poke(true.B)
-      dut.clock.step()
-      dut.reset.poke(false.B)
-      dut.clock.step()
-
     }
   }
 }
