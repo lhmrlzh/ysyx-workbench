@@ -56,6 +56,7 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_si(char *args) {
+  args = strtok(args, " ");
   int steps = 1;
   if (args != NULL)
     steps = atoi(args);
@@ -75,12 +76,13 @@ static int cmd_info(char *args) {
 static int cmd_x(char *args) {
   args = strtok(args, " ");
   if (args == NULL) {
-    printf("[ERROR]: no n input\n");
+    printf("[ERROR]: no N input\n");
   }
   int n = atoi(args);
   args = strtok(NULL, " ");
+  // TODO：目前的逻辑输入为纯16进制数
   if (args == NULL) {
-    printf("[ERROR]: no n input\n");
+    printf("[ERROR]: no EXPR input\n");
   }
   uint32_t addr = strtol(args, NULL, 16);
 
