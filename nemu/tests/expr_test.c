@@ -1,6 +1,6 @@
-bool check_parentheses(int p, int q);
+// bool check_parentheses(int p, int q);
 
-int main()
-{
+// int main()
+// {
 
-}
+// }
