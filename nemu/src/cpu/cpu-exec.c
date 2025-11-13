@@ -39,9 +39,9 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
 #ifdef CONFIG_WATCHPOINT
-  WP* cur = wp_head();
+  WP *cur = wp_head();
   bool s;
-  while(cur != NULL) {
+  while (cur != NULL) {
     word_t val = expr(cur->str, &s);
     if (!cur->is_val_defined) {
       cur->is_val_defined = true;
