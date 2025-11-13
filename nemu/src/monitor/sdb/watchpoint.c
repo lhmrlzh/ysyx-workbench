@@ -71,3 +71,7 @@ void info_watchpoints() {
     printf("%d\t%s\n", cur->NO, cur->str);
   }
 }
+
+WP* wp_head() {
+  return head;
+}

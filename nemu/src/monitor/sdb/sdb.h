@@ -24,6 +24,7 @@ typedef struct watchpoint {
   struct watchpoint *next;
 
   /* TODO: Add more members if necessary */
+  bool is_val_defined;
   word_t val;
   char *str;
 } WP;
@@ -32,5 +33,6 @@ word_t expr(char *e, bool *success);
 WP *new_wp();
 void free_wp(WP *wp);
 void info_watchpoints();
+WP* wp_head();
 
 #endif

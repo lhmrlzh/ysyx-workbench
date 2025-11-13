@@ -168,8 +168,16 @@ static int cmd_p(char *args) {
 
 WP *wps[NR_WP] = {};
 static int cmd_w(char *args) {
+  bool success;
+  expr(args, &success);
+  if (!success) {
+    printf("Invalid expr\n");
+    return 1;
+  }
+
   WP *wp = new_wp();
   wp->str = args;
+  wp->is_val_defined = false;
   wps[wp->NO] = wp;
   return 0;
 }
