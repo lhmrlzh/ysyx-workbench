@@ -42,6 +42,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   WP *cur = wp_head();
   bool s;
   while (cur != NULL) {
+    printf("check wps[%d]: %s\n", cur->NO, cur->str);
     word_t val = expr(cur->str, &s);
     if (!cur->is_val_defined) {
       cur->is_val_defined = true;
