@@ -176,7 +176,8 @@ static int cmd_w(char *args) {
   }
 
   WP *wp = new_wp();
-  wp->str = args;
+  wp->str = malloc(strlen(args) + 1);
+  strcpy(wp->str, args);
   wp->is_val_defined = false;
   wps[wp->NO] = wp;
   return 0;
@@ -184,12 +185,20 @@ static int cmd_w(char *args) {
 
 static int cmd_d(char *args) {
   int n = atoi(args);
-  if (wps[n] == NULL) {
+  WP* wp = wps[n];
+  if (wp == NULL) {
     printf("No watchpoint with NO %d\n", n);
     return 1;
   }
-  free_wp(wps[n]);
-  wps[n] = NULL;
+  
+  // 释放wp内存并重设值
+  wp->is_val_defined = false;
+  if (wp->str != NULL) {
+    free(wp->str);
+    wp->str = NULL;
+  }
+  free_wp(wp);
+  wp = NULL;
   return 0;
 }
 
